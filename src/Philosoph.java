@@ -1,4 +1,3 @@
-import static java.lang.Thread.sleep;
 
 public class Philosoph extends Thread {
     long t_verhungern;
@@ -6,8 +5,6 @@ public class Philosoph extends Thread {
     long t_essen;
     Gabel gabel_links;
     Gabel gabel_rechts;
-    boolean links;
-    boolean rechts;
     int id;
 
     public Philosoph(int id, long t_verhungern, long t_warten, long t_essen, Gabel links, Gabel rechts){
