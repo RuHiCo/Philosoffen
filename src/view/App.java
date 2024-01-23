@@ -19,6 +19,14 @@ public class App extends JFrame{
         this.leinwand.philophStirbt(philosoph);
     }
 
+    public void philosophIsst(int philosoph){
+        this.leinwand.philophIsst(philosoph);
+    }
+
+    public void philosophIsstNichtMehr(int philosoph){
+        this.leinwand.philophIsstNichtMehr(philosoph);
+    }
+
     public void philosopherGrabsFork(int philosoph, String gabel){
         this.leinwand.philosophNimmtGabel(philosoph, gabel);
     }

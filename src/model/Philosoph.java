@@ -28,45 +28,53 @@ public class Philosoph extends Observable implements Runnable {
         if(gabel.equals("links")){
             this.links=this.gabelLinks.gabelNehmen();
             if(this.links){
-                setChanged();
                 notifyObservers(new Events(1, this.id,"links"));
+                setChanged();
                 //System.out.printf("%d nimmt linke Gabel\n",this.id);
             }
         } else if(gabel.equals("rechts")) {
             this.rechts=this.gabelRechts.gabelNehmen();
             if(this.rechts) {
-                setChanged();
                 notifyObservers(new Events(1, this.id,"rechts"));
+                setChanged();
                 //System.out.printf("%d nimmt rechte Gabel\n", this.id);
             }
         }
         return false;
     }
 
-    public void gabelnZuruecklegen(){
-        if(this.links) {
+    public void gabelZuruecklegen(String gabel){
+        if (gabel.equals("links")) {
             this.gabelLinks.gabelZuruecklegen();
+            notifyObservers(new Events(2, this.id, "links"));
             setChanged();
-            notifyObservers(new Events(2, this.id,"links"));
             //System.out.printf("%d legt linke Gabel ab\n", this.id);
-            this.links=false;
-        }
-        if(this.rechts) {
+            this.links = false;
+        }else if (gabel.equals("rechts")) {
             this.gabelRechts.gabelZuruecklegen();
-            setChanged();
             notifyObservers(new Events(2, this.id,"rechts"));
+            setChanged();
             //System.out.printf("%d legt rechte Gabel ab\n", this.id);
             this.rechts=false;
         }
     }
 
+    public void gabelnZuruecklegen(){
+        gabelZuruecklegen("links");
+        gabelZuruecklegen("rechts");
+    }
+
     public boolean essen(){
         if(links && rechts) {
+            notifyObservers(new Events(3, this.id,""));
+            setChanged();
             try {
                 Thread.sleep(this.tEssen);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            notifyObservers(new Events(4, this.id,""));
+            setChanged();
             //System.out.println(this.id + " isst mit Gabel " + this.gabelLinks.id + " und " + this.gabelRechts.id);
             return true;
         }
@@ -85,17 +93,16 @@ public class Philosoph extends Observable implements Runnable {
             }
             this.gabelNehmen("links");
             this.gabelNehmen("rechts");
+            i=(i+1)%5;
             if (this.essen()) {
                 t0 = System.currentTimeMillis();
-                this.gabelnZuruecklegen();
             }
-
             this.gabelnZuruecklegen();
 
         }
         this.gabelnZuruecklegen();
-        setChanged();
         notifyObservers(new Events(0, this.id,""));
+        setChanged();
         System.out.println("Ich, "+this.id+", gebe den Löffel ab ");
     }
 }

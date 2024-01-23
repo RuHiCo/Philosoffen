@@ -50,9 +50,6 @@ public class Canvas extends JPanel{
     public static void fillCircle(int x,int y,int r,Graphics g){
         g.fillOval(x-r,y-r,r*2,r*2);
     }
-    public void paintTable(Graphics g){
-        drawCircle(this.mitteX,this.mitteY,this.durchmesser/2,g);
-    }
     public void paintPhilosophs(Graphics g){
         GraphischerPhilosoph philosoph;
         for(int i=0;i<this.philosophen.length;i++){
@@ -67,6 +64,9 @@ public class Canvas extends JPanel{
             if (philosoph.rechts){
                 g.drawLine(philosoph.x,philosoph.y,this.gabeln[(i+this.anzahl-1)%this.anzahl].x1,this.gabeln[(i+this.anzahl-1)%this.anzahl].y1);
             }
+            if (philosoph.isst){
+                drawCircle(philosoph.x,philosoph.y,philosoph.r/2,g);
+            }
         }
     }
     public void paintGabel(Graphics g){
@@ -79,7 +79,7 @@ public class Canvas extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
-        paintTable(g);
+        drawCircle(this.mitteX,this.mitteY,this.durchmesser/2,g);
         paintPhilosophs(g);
         paintGabel(g);
     }
@@ -98,4 +98,15 @@ public class Canvas extends JPanel{
         this.philosophen[philosoph].stirbt();
         repaint();
     }
+
+    public void philophIsst(int philosoph){
+        this.philosophen[philosoph].isst();
+        repaint();
+    }
+
+    public void philophIsstNichtMehr(int philosoph){
+        this.philosophen[philosoph].isstNichtMehr();
+        repaint();
+    }
+
 }

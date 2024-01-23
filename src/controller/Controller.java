@@ -50,6 +50,10 @@ public class Controller implements Observer {
             this.app.philosopherGrabsFork(philosoph, gabel);
         } else if (event == 2) {
             this.app.philosopherDropsFork(philosoph, gabel);
+        }else if (event==3){
+            this.app.philosophIsst(philosoph);
+        }else if (event==4){
+            this.app.philosophIsstNichtMehr(philosoph);
         }
     }
 
